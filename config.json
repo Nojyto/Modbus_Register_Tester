@@ -1,0 +1,360 @@
+{
+    "settings": {
+        "model": "RUTX11",
+        "ssh" :{
+            "ip": "192.168.1.1",
+            "port": 22,
+            "user": "root",
+            "pasw": "Admin123"
+        },
+        "modbus" :{
+            "ip": "192.168.1.1",
+            "port": 502,
+            "id": 1
+        }
+    },
+    "tests": {
+        "System uptime": {
+            "adr": 1,
+            "cc": 2,
+            "rpr": "uint32 (s)",
+            "cmnd": "uptime | cut -d ',' -f 1 | cut -c 14-"
+        },
+        "Mobile signal strength (RSSI in dBm)": {
+            "adr": 3,
+            "cc": 2,
+            "rpr": "int32",
+            "cmnd": "gsmctl -q | grep RSSI | cut -c 7-"
+        },
+        "System temperature (in 0.1 °C)": {
+            "adr": 5,
+            "cc": 2,
+            "rpr": "int32",
+            "cmnd": "gsmctl -c"
+        },
+        "System hostname": {
+            "adr": 7,
+            "cc": 16,
+            "rpr": "str",
+            "cmnd": "uname -n"
+        },
+        "GSM operator name": {
+            "adr": 23,
+            "cc": 16,
+            "rpr": "str",
+            "cmnd": "gsmctl -o"
+        },
+        "Router serial number": {
+            "adr": 39,
+            "cc": 16,
+            "rpr": "str",
+            "cmnd": "mnf_info -s"
+        },
+        "LAN MAC address": {
+            "adr": 55,
+            "cc": 16,
+            "rpr": "str",
+            "cmnd": "mnf_info -m"
+        },
+        "Router name": {
+            "adr": 71,
+            "cc": 16,
+            "rpr": "str",
+            "cmnd": "uci get system.system.routername"
+        },
+        "Currently active SIM card slot": {
+            "adr": 87,
+            "cc": 16,
+            "rpr": "str",
+            "cmnd": "ubus call sim get | grep sim | tr '\":' ' ' | tr -d ' '"
+        },
+        "Network registration info": {
+            "adr": 103,
+            "cc": 16,
+            "rpr": "str",
+            "cmnd": "gsmctl -g"
+        },
+        "Network type": {
+            "adr": 119,
+            "cc": 16,
+            "rpr": "str",
+            "cmnd": "gsmctl -F | cut -d '|' -f 1"
+        },
+        "Digital Input (DIN1) state":{
+            "adr": 135,
+            "cc": 2,
+            "rpr": "int32",
+            "cmnd": "ubus call ioman.gpio.din1 status | grep value | cut -d ':' -f 2 | cut -c 2- | tr ',' ' ' | tr '\"' ' '"
+        },
+        "Digital galvanically isolated input (DIN2) state":{
+            "adr": 137,
+            "cc": 2,
+            "rpr": "int32",
+            "cmnd": "ubus call ioman.gpio.din2 status | grep value | cut -d ':' -f 2 | cut -c 2- | tr ',' ' ' | tr '\"' ' '"
+        },
+        "Current WAN IP address": {
+            "adr": 139,
+            "cc": 2,
+            "rpr": "int8",
+            "cmnd": "ifconfig wwan0 | grep -w \"inet addr\" | tr ' ' '\n' | grep \"addr\" | cut -d ':' -f 2"
+        },
+        "Analog input (PIN 9) value":{
+            "adr": 141,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call ioman.adc.adc0 status | grep '\"value\":' | cut -d ':' -f 2 | tr ',' ' '"
+        },
+        "GPS latitude coordinate": {
+            "adr": 143,
+            "cc": 2,
+            "rpr": "float32",
+            "cmnd": "ubus call gpsd position | grep latitude | tr ' ' '\n' | grep ',' | tr ',' ' '"
+        },
+        "GPS longitude coordinate": {
+            "adr": 145,
+            "cc": 2,
+            "rpr": "float32",
+            "cmnd": "ubus call gpsd position | grep longitude | tr ' ' '\n' | grep ',' | tr ',' ' '"
+        },
+        "GPS fix time": {
+            "adr": 147,
+            "cc": 16,
+            "rpr": "unixts (s)",
+            "cmnd": "ubus call gpsd position | grep '\"timestamp\":' | tr ' ' '\n' | grep ',' | tr ',' ' '"
+        },
+        "GPS date and time": {
+            "adr": 163,
+            "cc": 16,
+            "rpr": "date (s)",
+            "cmnd": "ubus call gpsd position | grep '\"timestamp\":' | tr ' ' '\n' | grep ',' | tr ',' ' '"
+        },
+        "GPS speed": {
+            "adr": 179,
+            "cc": 2,
+            "rpr": "float32",
+            "cmnd": "ubus call gpsd position | grep speed | tr ' ' '\n' | grep ',' | tr ',' ' '"
+        },
+        "GPS satellite count": {
+            "adr": 181,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call gpsd position | grep satellites | tr ' ' '\n' | grep ',' | tr ',' ' '"
+        },
+        "GPS accuracy": {
+            "adr": 183,
+            "cc": 2,
+            "rpr": "float32",
+            "cmnd": "ubus call gpsd position | grep accuracy | tr ' ' '\n' | grep ',' | tr ',' ' '"
+        },
+        "Mobile data received today (SIM1)": {
+            "adr": 185,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'today', 'sim':1, 'current':true}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent today (SIM1)": {
+            "adr": 187,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'today', 'sim':1, 'current':true}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data received this week (SIM1)": {
+            "adr": 189,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'week', 'sim':1, 'current':true}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent this week (SIM1)": {
+            "adr": 191,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'week', 'sim':1, 'current':true}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data received this month (SIM1)": {
+            "adr": 193,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'month', 'sim':1, 'current':true}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent this month (SIM1)": {
+            "adr": 195,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'month', 'sim':1, 'current':true}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data received last 24h (SIM1)": {
+            "adr": 197,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'day', 'sim':1, 'current':false}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent last 24h (SIM1)": {
+            "adr": 199,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'day', 'sim':1, 'current':false}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Galvanically isolated open collector output status": {
+            "adr": 201,
+            "cc": 1,
+            "rpr": "uint16",
+            "cmnd": "ubus call ioman.gpio.iio status | grep value | cut -d ':' -f 2 | cut -c 2- | tr ',' ' ' | tr '\"' ' '"
+        },
+        "Relay output status": {
+            "adr": 202,
+            "cc": 1,
+            "rpr": "uint16",
+            "cmnd": "ubus call ioman.relay.relay0 status | grep state | cut -d ':' -f 2 | tr '\"open\"' '0' | tr '\"closed\"' '1' | cut -c 7-"
+        },
+        "Active SIM card": {
+            "adr": 205,
+            "cc": 1,
+            "rpr": "uint16",
+            "cmnd": "ubus call sim get | grep \"sim\" | tail -c 2"
+        },
+        "Mobile data received last week (SIM1)": {
+            "adr": 292,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'week', 'sim':1, 'current':false}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent last week (SIM1)": {
+            "adr": 294,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'week', 'sim':1, 'current':false}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data received last month (SIM1)": {
+            "adr": 296,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'month', 'sim':1, 'current':false}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent last month (SIM1)": {
+            "adr": 298,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'month', 'sim':1, 'current':false}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data received today (SIM2)": {
+            "adr": 300,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'day', 'sim':2, 'current':true}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent today (SIM2)": {
+            "adr": 302,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'day', 'sim':2, 'current':true}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data received this week (SIM2)": {
+            "adr": 304,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'week', 'sim':2, 'current':true}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent this week (SIM2)": {
+            "adr": 306,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'week', 'sim':2, 'current':true}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data received this month (SIM2)": {
+            "adr": 308,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'month', 'sim':2, 'current':true}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent this month (SIM2)": {
+            "adr": 310,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'month', 'sim':2, 'current':false}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data received last 24h (SIM2)": {
+            "adr": 312,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'day', 'sim':2, 'current':false}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent last 24h (SIM2)": {
+            "adr": 314,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'day', 'sim':2, 'current':false}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data received last week (SIM2)": {
+            "adr": 316,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'week', 'sim':2, 'current':false}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent last week (SIM2)": {
+            "adr": 318,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'week', 'sim':2, 'current':false}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data received last month(SIM2)": {
+            "adr": 320,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'month', 'sim':2, 'current':false}\" | grep rx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Mobile data sent last month (SIM2)": {
+            "adr": 322,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "ubus call mdcollect get \"{'period':'month', 'sim':2, 'current':false}\" | grep tx | cut -d ':' -f 2 | cut -c 2- | tr ',' ' '"
+        },
+        "Digital non-isolated input": {
+            "adr": 324,
+            "cc": 1,
+            "rpr": "uint16",
+            "cmnd": "uci get ioman.din1.invert_input"
+        },
+        "Digital open collector output": {
+            "adr": 325,
+            "cc": 1,
+            "rpr": "uint16",
+            "cmnd": "uci get ioman.dout1.value"
+        },
+        "Modem ID": {
+            "adr": 328,
+            "cc": 8,
+            "rpr": "str",
+            "cmnd": "uci get network.mob1s1a1.modem"
+        },
+        "IMSI": {
+            "adr": 348,
+            "cc": 16,
+            "rpr": "str",
+            "cmnd":"gsmctl -x"
+        },
+        "Unix timestamp": {
+            "adr": 364,
+            "cc": 2,
+            "rpr": "uint32",
+            "cmnd": "date +%s"
+        },
+        "Local ISO time": {
+            "adr": 366,
+            "cc": 12,
+            "rpr": "str",
+            "cmnd": "date +%Y-%m-%dT%H:%M:%S%z"
+        },
+        "UTC time": {
+            "adr": 378,
+            "cc": 12,
+            "rpr": "str",
+            "cmnd": "date +%Y-%m-%dT%H:%M:%S%z -u"
+        },
+        "LAN IP": {
+            "adr": 394,
+            "cc": 2,
+            "rpr": "int8",
+            "cmnd": "uci get network.lan.ipaddr"
+        }
+    }
+}

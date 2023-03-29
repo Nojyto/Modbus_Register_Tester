@@ -1,0 +1,59 @@
+Modbus register information
+Data name, Register Address, Number of Registers, Data type, Expected reponse(Modbus), Received response(SSH), Status
+System uptime, 1, 2, uint32 (s), 2:14, 2:14, PASSED
+Mobile signal strength (RSSI in dBm), 3, 2, int32, -45, -45, PASSED
+System temperature (in 0.1 °C), 5, 2, int32, 400, 400, PASSED
+System hostname, 7, 16, str, Teltonika-RUTX11.com, Teltonika-RUTX11.com, PASSED
+GSM operator name, 23, 16, str, Bite Bite, Bite Bite, PASSED
+Router serial number, 39, 16, str, 1110828827, 1110828827, PASSED
+LAN MAC address, 55, 16, str, 001E42327069, 001E42327069, PASSED
+Router name, 71, 16, str, RUTX11, RUTX11, PASSED
+Currently active SIM card slot, 87, 16, str, sim1, sim1, PASSED
+Network registration info, 103, 16, str, Registered  home, Registered  home, PASSED
+Network type, 119, 16, str, LTE, LTE, PASSED
+Digital Input (DIN1) state, 135, 2, int32, -, Illegal Data Address, ERROR
+Digital galvanically isolated input (DIN2) state, 137, 2, int32, -, Illegal Data Address, ERROR
+Current WAN IP address, 139, 2, int8, 10.24.69.17, 10.24.69.17, PASSED
+Analog input (PIN 9) value, 141, 2, uint32, -, Illegal Data Address, ERROR
+GPS latitude coordinate, 143, 2, float32, 0.000000, 0.000000, PASSED
+GPS longitude coordinate, 145, 2, float32, 0.000000, 0.000000, PASSED
+GPS fix time, 147, 16, unixts (s), 0, 0, PASSED
+GPS date and time, 163, 16, date (s), 0, 0, PASSED
+GPS speed, 179, 2, float32, 0.000000, 0.000000, PASSED
+GPS satellite count, 181, 2, uint32, 0, 0, PASSED
+GPS accuracy, 183, 2, float32, 0.000000, 0.000000, PASSED
+Mobile data received today (SIM1), 185, 2, uint32, 200944, 200944, PASSED
+Mobile data sent today (SIM1), 187, 2, uint32, 194164, 194164, PASSED
+Mobile data received this week (SIM1), 189, 2, uint32, 595637, 595637, PASSED
+Mobile data sent this week (SIM1), 191, 2, uint32, 530529, 530529, PASSED
+Mobile data received this month (SIM1), 193, 2, uint32, 2588181150, 2588181150, PASSED
+Mobile data sent this month (SIM1), 195, 2, uint32, 159832007, 159832007, PASSED
+Mobile data received last 24h (SIM1), 197, 2, uint32, 409183, 409183, PASSED
+Mobile data sent last 24h (SIM1), 199, 2, uint32, 367994, 367994, PASSED
+Galvanically isolated open collector output status, 201, 1, uint16, -, Illegal Data Address, ERROR
+Relay output status, 202, 1, uint16, -, Illegal Data Address, ERROR
+Active SIM card, 205, 1, uint16, 1, 1, PASSED
+Mobile data received last week (SIM1), 292, 2, uint32, 2550524, 2550524, PASSED
+Mobile data sent last week (SIM1), 294, 2, uint32, 1447201, 1447201, PASSED
+Mobile data received last month (SIM1), 296, 2, uint32, 2594963390, 2594963390, PASSED
+Mobile data sent last month (SIM1), 298, 2, uint32, 165570149, 165570149, PASSED
+Mobile data received today (SIM2), 300, 2, uint32, 0, 0, PASSED
+Mobile data sent today (SIM2), 302, 2, uint32, 0, 0, PASSED
+Mobile data received this week (SIM2), 304, 2, uint32, 0, 0, PASSED
+Mobile data sent this week (SIM2), 306, 2, uint32, 0, 0, PASSED
+Mobile data received this month (SIM2), 308, 2, uint32, 0, 0, PASSED
+Mobile data sent this month (SIM2), 310, 2, uint32, 0, 0, PASSED
+Mobile data received last 24h (SIM2), 312, 2, uint32, 0, 0, PASSED
+Mobile data sent last 24h (SIM2), 314, 2, uint32, 0, 0, PASSED
+Mobile data received last week (SIM2), 316, 2, uint32, 0, 0, PASSED
+Mobile data sent last week (SIM2), 318, 2, uint32, 0, 0, PASSED
+Mobile data received last month(SIM2), 320, 2, uint32, 0, 0, PASSED
+Mobile data sent last month (SIM2), 322, 2, uint32, 0, 0, PASSED
+Digital non-isolated input, 324, 1, uint16, 0, 0, PASSED
+Digital open collector output, 325, 1, uint16, 0, 0, PASSED
+Modem ID, 328, 8, str, 3-1, 3-1, PASSED
+IMSI, 348, 16, str, 246020101195017, 246020101195017, PASSED
+Unix timestamp, 364, 2, uint32, 1680084068, 1680084068, PASSED
+Local ISO time, 366, 12, str, 2023-03-29T13:01:08+0300, 2023-03-29T13:01:08+0300, PASSED
+UTC time, 378, 12, str, 2023-03-29T10:01:08+0000, 2023-03-29T10:01:08+0000, PASSED
+LAN IP, 394, 2, int8, 192.168.1.1, 192.168.1.1, PASSED
