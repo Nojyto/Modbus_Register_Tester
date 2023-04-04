@@ -42,9 +42,3 @@ if __name__ == "__main__":
         except Exception as e:
             print(TestTracker.wrapColor(f"Error: Failed to write output file: {e}", "WARNING", "BOLD"))
         print("Exiting...")
-
-    
-
-    
-
-    
