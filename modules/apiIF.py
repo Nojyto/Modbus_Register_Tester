@@ -43,37 +43,23 @@ class deviceInterface:
             dat = rsp.registers
             decoder = BinaryPayloadDecoder.fromRegisters(dat, byteorder=Endian.Big)
             match rpr:
-                case "int8":
-                    #return decoder.decode_8bit_int()
+                case "uint8":
+                    #return decoder.decode_8bit_uint()
                     return '.'.join([str(int(f'{dat[0]:016b}{dat[1]:016b}'[i:i+8], 2)) \
                                      for i in range(0, 32, 8)])
-                case "uint16":
-                    return decoder.decode_16bit_uint()
-                    #return dat[0]
-                case "int32":
-                    return decoder.decode_32bit_int()
-                    #return dat[1] if dat[0] == 0 else ~dat[0] + dat[1]
-                case "uint32":
-                    return decoder.decode_32bit_uint()
-                    #return dat[0]*65536 + dat[1]
+                case "uint16":  return decoder.decode_16bit_uint()
+                case "int32":   return decoder.decode_32bit_int()
+                case "uint32":  return decoder.decode_32bit_uint()
                 case "uint32 (s)":
-                    m = (dat[0]*65536 + dat[1]) // 60
+                    m = decoder.decode_32bit_uint() // 60
                     return f"{m} min" if m < 60 else "{0}:{1:0>2}".format(*divmod(m, 60))
                 case "float32":
                     return "{:.6f}".format(decoder.decode_32bit_float()) 
-                case "unixts":
-                    return dat[0]*1000
                 case "date (s)":
                     ts = datetime.timestamp(datetime.strptime(self.stripData(decoder.decode_string(size=32).decode()), "%Y-%m-%d %H:%M:%S")) 
                     return ts if ts > 0 else 0
-                case "str" | "date" | "unixts (s)":
-                    return self.stripData(decoder.decode_string(size=32).decode())
-                    # output = ""
-                    # for el in dat:
-                    #     hh = hex(el)[2:]
-                    #     if hh != "0":
-                    #         output += chr(int(hh[:2], 16)) + chr(int(hh[2:], 16))
-                    # return self.stripData(output)
+                case "str" | "date" | "unixts":
+                    return self.stripData(decoder.decode_string(size=4096).decode())
                 case _:
                     return "Type not implemented"
         except:
@@ -114,33 +100,3 @@ class deviceInterface:
             time.sleep(0.1)
 
         return rsp, exp, status
-
-
-# dat = [35480, 23362]
-# import struct
-# value = struct.unpack('f', struct.pack('>HH', *dat))[0]
-# print(value)
-# rpr = "".join([f'{dat[0]:04x}{dat[1]:04x}'[i:i+2] \
-#         for i in range(0, 8, 2)][::-1])
-# print(rpr)
-# byyyt = f'{int(rpr, 16):032b}'
-# half1, half2 = byyyt[:23], byyyt[24:]
-# print(byyyt)
-# output1 = 0.0
-# output2 = 0.0
-# for p, b in enumerate(half1, 1):
-#     print(1/(2**p))
-#     output1 += int(b)*(1/(2**p))
-# print(output1)
-# for p, b in enumerate(half2, 1):
-#     print(1/(2**p))
-#     output2 += int(b)*(1/(2**p))
-# print(output2*100+ output1-127)
-# exit()
-#devIF = deviceInterface(cfg["settings"], cfg["modbusSetup"])
-
-
-
-# klausima
-# curr active sim card slot
-# mobile data visokius
